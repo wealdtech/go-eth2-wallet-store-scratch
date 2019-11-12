@@ -13,28 +13,26 @@
 
 package scratch
 
-import (
-	types "github.com/wealdtech/go-eth2-wallet-types"
-)
+import "github.com/google/uuid"
 
 // StoreAccount stores an account.  It will fail if it cannot store the data.
 // Note this will overwrite an existing account with the same ID.  It will not, however, allow multiple accounts with the same
 // name to co-exist in the same wallet.
-func (s *Store) StoreAccount(wallet types.Wallet, account types.Account, data []byte) error {
-	s.accounts[wallet.Name()][account.Name()] = data
+func (s *Store) StoreAccount(walletID uuid.UUID, walletName string, accountID uuid.UUID, accountName string, data []byte) error {
+	s.accounts[walletName][accountName] = data
 	return nil
 }
 
 // RetrieveAccount retrieves account-level data.  It will fail if it cannot retrieve the data.
-func (s *Store) RetrieveAccount(wallet types.Wallet, name string) ([]byte, error) {
-	return s.accounts[wallet.Name()][name], nil
+func (s *Store) RetrieveAccount(walletID uuid.UUID, walletName string, accountName string) ([]byte, error) {
+	return s.accounts[walletName][accountName], nil
 }
 
 // RetrieveAccounts retrieves all account-level data for a wallet.
-func (s *Store) RetrieveAccounts(wallet types.Wallet) <-chan []byte {
+func (s *Store) RetrieveAccounts(id uuid.UUID, name string) <-chan []byte {
 	ch := make(chan []byte, 1024)
 	go func() {
-		for _, account := range s.accounts[wallet.Name()] {
+		for _, account := range s.accounts[name] {
 			ch <- account
 		}
 		close(ch)

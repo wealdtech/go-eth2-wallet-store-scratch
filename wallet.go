@@ -17,14 +17,14 @@ package scratch
 import (
 	"fmt"
 
-	types "github.com/wealdtech/go-eth2-wallet-types"
+	"github.com/google/uuid"
 )
 
 // StoreWallet stores wallet-level data.
-func (s *Store) StoreWallet(wallet types.Wallet, data []byte) error {
-	s.wallets[wallet.Name()] = data
-	if _, exists := s.accounts[wallet.Name()]; !exists {
-		s.accounts[wallet.Name()] = make(map[string][]byte)
+func (s *Store) StoreWallet(id uuid.UUID, name string, data []byte) error {
+	s.wallets[name] = data
+	if _, exists := s.accounts[name]; !exists {
+		s.accounts[name] = make(map[string][]byte)
 	}
 	return nil
 }
