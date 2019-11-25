@@ -13,26 +13,54 @@
 
 package scratch
 
-import "github.com/google/uuid"
+import (
+	"encoding/json"
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 // StoreAccount stores an account.  It will fail if it cannot store the data.
 // Note this will overwrite an existing account with the same ID.  It will not, however, allow multiple accounts with the same
 // name to co-exist in the same wallet.
-func (s *Store) StoreAccount(walletID uuid.UUID, walletName string, accountID uuid.UUID, accountName string, data []byte) error {
-	s.accounts[walletName][accountName] = data
+func (s *Store) StoreAccount(walletID uuid.UUID, accountID uuid.UUID, accountName string, data []byte) error {
+	s.accounts[walletID.String()][accountID.String()] = data
 	return nil
 }
 
 // RetrieveAccount retrieves account-level data.  It will fail if it cannot retrieve the data.
-func (s *Store) RetrieveAccount(walletID uuid.UUID, walletName string, accountName string) ([]byte, error) {
-	return s.accounts[walletName][accountName], nil
+func (s *Store) RetrieveAccount(walletID uuid.UUID, accountName string) ([]byte, error) {
+	for data := range s.RetrieveAccounts(walletID) {
+		info := &struct {
+			Name string `json:"name"`
+		}{}
+		err := json.Unmarshal(data, info)
+		if err == nil && info.Name == accountName {
+			return data, nil
+		}
+	}
+	return nil, errors.New("account not found")
+}
+
+// RetrieveAccountByID retrieves account-level data.  It will fail if it cannot retrieve the data.
+func (s *Store) RetrieveAccountByID(walletID uuid.UUID, accountID uuid.UUID) ([]byte, error) {
+	for data := range s.RetrieveAccounts(walletID) {
+		info := &struct {
+			ID uuid.UUID `json:"uuid"`
+		}{}
+		err := json.Unmarshal(data, info)
+		if err == nil && info.ID == accountID {
+			return data, nil
+		}
+	}
+	return nil, errors.New("account not found")
 }
 
 // RetrieveAccounts retrieves all account-level data for a wallet.
-func (s *Store) RetrieveAccounts(id uuid.UUID, name string) <-chan []byte {
+func (s *Store) RetrieveAccounts(walletID uuid.UUID) <-chan []byte {
 	ch := make(chan []byte, 1024)
 	go func() {
-		for _, account := range s.accounts[name] {
+		for _, account := range s.accounts[walletID.String()] {
 			ch <- account
 		}
 		close(ch)

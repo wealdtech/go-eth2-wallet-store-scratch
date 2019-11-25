@@ -15,27 +15,47 @@
 package scratch
 
 import (
-	"fmt"
+	"encoding/json"
+	"errors"
 
 	"github.com/google/uuid"
 )
 
 // StoreWallet stores wallet-level data.
-func (s *Store) StoreWallet(id uuid.UUID, name string, data []byte) error {
-	s.wallets[name] = data
-	if _, exists := s.accounts[name]; !exists {
-		s.accounts[name] = make(map[string][]byte)
+func (s *Store) StoreWallet(walletID uuid.UUID, walletName string, data []byte) error {
+	s.wallets[walletID.String()] = data
+	if _, exists := s.accounts[walletID.String()]; !exists {
+		s.accounts[walletID.String()] = make(map[string][]byte)
 	}
 	return nil
 }
 
 // RetrieveWallet retrieves wallet-level data.  It will fail if it cannot retrieve the data.
 func (s *Store) RetrieveWallet(walletName string) ([]byte, error) {
-	data, exists := s.wallets[walletName]
-	if !exists {
-		return nil, fmt.Errorf("no wallet at %s", walletName)
+	for data := range s.RetrieveWallets() {
+		info := &struct {
+			Name string `json:"name"`
+		}{}
+		err := json.Unmarshal(data, info)
+		if err == nil && info.Name == walletName {
+			return data, nil
+		}
 	}
-	return data, nil
+	return nil, errors.New("wallet not found")
+}
+
+// RetrieveWalletByID retrieves wallet-level data.  It will fail if it cannot retrieve the data.
+func (s *Store) RetrieveWalletByID(walletID uuid.UUID) ([]byte, error) {
+	for data := range s.RetrieveWallets() {
+		info := &struct {
+			ID uuid.UUID `json:"uuid"`
+		}{}
+		err := json.Unmarshal(data, info)
+		if err == nil && info.ID == walletID {
+			return data, nil
+		}
+	}
+	return nil, errors.New("wallet not found")
 }
 
 // RetrieveWallets retrieves wallet-level data for all wallets.
