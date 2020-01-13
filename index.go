@@ -14,27 +14,22 @@
 package scratch
 
 import (
+	"errors"
+
 	"github.com/google/uuid"
-	types "github.com/wealdtech/go-eth2-wallet-types"
 )
 
-// Store is the store for the wallet
-type Store struct {
-	wallets      map[string][]byte
-	accounts     map[string]map[string][]byte
-	accountIndex map[uuid.UUID][]byte
+// StoreAccountsIndex stores the account index.
+func (s *Store) StoreAccountsIndex(walletID uuid.UUID, data []byte) error {
+	s.accountIndex[walletID] = data
+	return nil
 }
 
-// New creates a new scratch store.
-func New() types.Store {
-	return &Store{
-		wallets:      make(map[string][]byte),
-		accounts:     make(map[string]map[string][]byte),
-		accountIndex: make(map[uuid.UUID][]byte),
+// RetrieveAccountsIndex retrieves the account index.
+func (s *Store) RetrieveAccountsIndex(walletID uuid.UUID) ([]byte, error) {
+	index, exists := s.accountIndex[walletID]
+	if !exists {
+		return nil, errors.New("not found")
 	}
-}
-
-// Name returns the name of this store.
-func (s *Store) Name() string {
-	return "scratch"
+	return index, nil
 }

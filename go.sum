@@ -15,6 +15,8 @@ github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1/go.mod h1:pD8Rv
 github.com/mmcloughlin/avo v0.0.0-20190318053554-7a0eb66183da/go.mod h1:lf5GMZxA5kz8dnCweJuER5Rmbx6dDu6qvw0fO3uYKK8=
 github.com/phoreproject/bls v0.0.0-20190821133044-da95d4798b09 h1:f0WZnMl5hMHNpfUPR+klp00ZaIL1dLPZigpJUWupreI=
 github.com/phoreproject/bls v0.0.0-20190821133044-da95d4798b09/go.mod h1:7pK0Ldy91shCmI47LLTn3i3rfTQcHiJJvPqGqzvN5nE=
+github.com/phoreproject/bls v0.0.0-20191211001008-9d5f85bf4a9b h1:tE/F54uL3jp0ZGSKNMPGCTF003pSmtD/sQojpKADAxY=
+github.com/phoreproject/bls v0.0.0-20191211001008-9d5f85bf4a9b/go.mod h1:xHJKf2TLXUA39Dhv8k5QmQOxLsbrb1KeTS/3ERfLeqc=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
@@ -27,10 +29,16 @@ github.com/wealdtech/go-bytesutil v1.0.0 h1:BRG9Ag0ITj1SXUgemiY8kSJIQzLrseZF6FnW
 github.com/wealdtech/go-bytesutil v1.0.0/go.mod h1:jENeMqeTEU8FNZyDFRVc7KqBdRKSnJ9CCh26TcuNb9s=
 github.com/wealdtech/go-bytesutil v1.0.1 h1:6xzMM+VEHf5WNh1PsIFcRwScgcno+CP8Rw1rGvT6Cew=
 github.com/wealdtech/go-bytesutil v1.0.1/go.mod h1:jENeMqeTEU8FNZyDFRVc7KqBdRKSnJ9CCh26TcuNb9s=
+github.com/wealdtech/go-bytesutil v1.1.0 h1:6XrN7OIQhhBjQy/PZ1HZ3ySE8v8UDyxzERkOgmsIc1g=
+github.com/wealdtech/go-bytesutil v1.1.0/go.mod h1:jENeMqeTEU8FNZyDFRVc7KqBdRKSnJ9CCh26TcuNb9s=
 github.com/wealdtech/go-eth2-types v1.0.0 h1:ggrbQ5HeFcxVm20zxVWr8Sc3uCditaetzWB/Ax/4g0w=
 github.com/wealdtech/go-eth2-types v1.0.0/go.mod h1:fWUgtKQ7hiNVl6263bGeyjlydYuaxkxcUIPIopgz2CM=
 github.com/wealdtech/go-eth2-wallet-types v1.4.0 h1:Az22OrT+npIB96eVAHLBsEZ3dZjDVcmPq2XjnzbYBP0=
 github.com/wealdtech/go-eth2-wallet-types v1.4.0/go.mod h1:OQqqr/hWOwNHe9NyXI0cYGQI6CBBmAlcusqWnJCf7T8=
+github.com/wealdtech/go-eth2-wallet-types v1.5.0 h1:9uRdSws4Wg42lQ63AEg4X/1Mt/si5MIZOBaVpuCyrLU=
+github.com/wealdtech/go-eth2-wallet-types v1.5.0/go.mod h1:OQqqr/hWOwNHe9NyXI0cYGQI6CBBmAlcusqWnJCf7T8=
+github.com/wealdtech/go-eth2-wallet-types v1.8.0 h1:6K/u5CTcUavgzoABeeuBAZ0jp1qEOdK/9U8gaMJUlVE=
+github.com/wealdtech/go-eth2-wallet-types v1.8.0/go.mod h1:5A83MUBhmLgxpg9X5eqvnDIOYfn329caf5DOcv7pcY0=
 golang.org/x/arch v0.0.0-20181203225421-5a4828bb7045/go.mod h1:cYlCBUl1MsqxdiKgmc4uh7TxZfWSFLOGSRR090WDxt8=
 golang.org/x/arch v0.0.0-20190312162104-788fe5ffcd8c/go.mod h1:flIaEI6LNU6xOCD5PaJvn9wGP0agmIOqjrtsKGRguv4=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=

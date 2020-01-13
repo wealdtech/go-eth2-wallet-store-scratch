@@ -1,4 +1,4 @@
-// Copyright © 2019 Weald Technology Trading
+// Copyright 2019, 2020 Weald Technology Trading
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -23,27 +23,13 @@ import (
 // StoreAccount stores an account.  It will fail if it cannot store the data.
 // Note this will overwrite an existing account with the same ID.  It will not, however, allow multiple accounts with the same
 // name to co-exist in the same wallet.
-func (s *Store) StoreAccount(walletID uuid.UUID, accountID uuid.UUID, accountName string, data []byte) error {
+func (s *Store) StoreAccount(walletID uuid.UUID, accountID uuid.UUID, data []byte) error {
 	s.accounts[walletID.String()][accountID.String()] = data
 	return nil
 }
 
 // RetrieveAccount retrieves account-level data.  It will fail if it cannot retrieve the data.
-func (s *Store) RetrieveAccount(walletID uuid.UUID, accountName string) ([]byte, error) {
-	for data := range s.RetrieveAccounts(walletID) {
-		info := &struct {
-			Name string `json:"name"`
-		}{}
-		err := json.Unmarshal(data, info)
-		if err == nil && info.Name == accountName {
-			return data, nil
-		}
-	}
-	return nil, errors.New("account not found")
-}
-
-// RetrieveAccountByID retrieves account-level data.  It will fail if it cannot retrieve the data.
-func (s *Store) RetrieveAccountByID(walletID uuid.UUID, accountID uuid.UUID) ([]byte, error) {
+func (s *Store) RetrieveAccount(walletID uuid.UUID, accountID uuid.UUID) ([]byte, error) {
 	for data := range s.RetrieveAccounts(walletID) {
 		info := &struct {
 			ID uuid.UUID `json:"uuid"`
