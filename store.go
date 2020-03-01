@@ -15,7 +15,7 @@ package scratch
 
 import (
 	"github.com/google/uuid"
-	types "github.com/wealdtech/go-eth2-wallet-types"
+	wtypes "github.com/wealdtech/go-eth2-wallet-types/v2"
 )
 
 // Store is the store for the wallet
@@ -26,7 +26,7 @@ type Store struct {
 }
 
 // New creates a new scratch store.
-func New() types.Store {
+func New() wtypes.Store {
 	return &Store{
 		wallets:      make(map[string][]byte),
 		accounts:     make(map[string]map[string][]byte),
