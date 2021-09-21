@@ -14,6 +14,8 @@
 package scratch
 
 import (
+	"sync"
+
 	"github.com/google/uuid"
 	wtypes "github.com/wealdtech/go-eth2-wallet-types/v2"
 )
@@ -21,7 +23,9 @@ import (
 // Store is the store for the wallet
 type Store struct {
 	wallets      map[string][]byte
+	walletMu     sync.RWMutex
 	accounts     map[string]map[string][]byte
+	accountMu    sync.RWMutex
 	accountIndex map[uuid.UUID][]byte
 }
 

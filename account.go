@@ -24,7 +24,10 @@ import (
 // Note this will overwrite an existing account with the same ID.  It will not, however, allow multiple accounts with the same
 // name to co-exist in the same wallet.
 func (s *Store) StoreAccount(walletID uuid.UUID, accountID uuid.UUID, data []byte) error {
+	s.accountMu.Lock()
 	s.accounts[walletID.String()][accountID.String()] = data
+	s.accountMu.Unlock()
+
 	return nil
 }
 
@@ -46,9 +49,11 @@ func (s *Store) RetrieveAccount(walletID uuid.UUID, accountID uuid.UUID) ([]byte
 func (s *Store) RetrieveAccounts(walletID uuid.UUID) <-chan []byte {
 	ch := make(chan []byte, 1024)
 	go func() {
+		s.accountMu.RLock()
 		for _, account := range s.accounts[walletID.String()] {
 			ch <- account
 		}
+		s.accountMu.RUnlock()
 		close(ch)
 	}()
 	return ch

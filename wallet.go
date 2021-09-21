@@ -23,10 +23,15 @@ import (
 
 // StoreWallet stores wallet-level data.
 func (s *Store) StoreWallet(walletID uuid.UUID, walletName string, data []byte) error {
+	s.walletMu.Lock()
 	s.wallets[walletID.String()] = data
 	if _, exists := s.accounts[walletID.String()]; !exists {
+		s.accountMu.Lock()
 		s.accounts[walletID.String()] = make(map[string][]byte)
+		s.accountMu.Unlock()
 	}
+	s.walletMu.Unlock()
+
 	return nil
 }
 
@@ -62,10 +67,12 @@ func (s *Store) RetrieveWalletByID(walletID uuid.UUID) ([]byte, error) {
 func (s *Store) RetrieveWallets() <-chan []byte {
 	ch := make(chan []byte, 1024)
 	go func() {
+		s.walletMu.RLock()
 		for _, data := range s.wallets {
 			ch <- data
 		}
 		close(ch)
+		s.walletMu.RUnlock()
 	}()
 	return ch
 }
