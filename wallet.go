@@ -22,7 +22,7 @@ import (
 )
 
 // StoreWallet stores wallet-level data.
-func (s *Store) StoreWallet(walletID uuid.UUID, walletName string, data []byte) error {
+func (s *Store) StoreWallet(walletID uuid.UUID, _ string, data []byte) error {
 	s.walletMu.Lock()
 	s.wallets[walletID.String()] = data
 	if _, exists := s.accounts[walletID.String()]; !exists {

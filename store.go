@@ -20,7 +20,7 @@ import (
 	wtypes "github.com/wealdtech/go-eth2-wallet-types/v2"
 )
 
-// Store is the store for the wallet
+// Store is the store for the wallet.
 type Store struct {
 	wallets      map[string][]byte
 	walletMu     sync.RWMutex
