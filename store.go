@@ -1,4 +1,4 @@
-// Copyright 2019, 2020 Weald Technology Trading
+// Copyright 2019 - 2023 Weald Technology Trading.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -22,19 +22,22 @@ import (
 
 // Store is the store for the wallet.
 type Store struct {
-	wallets      map[string][]byte
-	walletMu     sync.RWMutex
-	accounts     map[string]map[string][]byte
-	accountMu    sync.RWMutex
-	accountIndex map[uuid.UUID][]byte
+	wallets       map[string][]byte
+	walletMu      sync.RWMutex
+	accounts      map[string]map[string][]byte
+	accountMu     sync.RWMutex
+	accountIndex  map[uuid.UUID][]byte
+	batchMu       sync.RWMutex
+	walletBatches map[uuid.UUID][]byte
 }
 
 // New creates a new scratch store.
 func New() wtypes.Store {
 	return &Store{
-		wallets:      make(map[string][]byte),
-		accounts:     make(map[string]map[string][]byte),
-		accountIndex: make(map[uuid.UUID][]byte),
+		wallets:       make(map[string][]byte),
+		accounts:      make(map[string]map[string][]byte),
+		accountIndex:  make(map[uuid.UUID][]byte),
+		walletBatches: make(map[uuid.UUID][]byte),
 	}
 }
 
