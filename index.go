@@ -31,5 +31,6 @@ func (s *Store) RetrieveAccountsIndex(walletID uuid.UUID) ([]byte, error) {
 	if !exists {
 		return nil, errors.New("not found")
 	}
+
 	return index, nil
 }

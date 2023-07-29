@@ -42,6 +42,7 @@ func (s *Store) RetrieveAccount(walletID uuid.UUID, accountID uuid.UUID) ([]byte
 			return data, nil
 		}
 	}
+
 	return nil, errors.New("account not found")
 }
 
@@ -56,5 +57,6 @@ func (s *Store) RetrieveAccounts(walletID uuid.UUID) <-chan []byte {
 		s.accountMu.RUnlock()
 		close(ch)
 	}()
+
 	return ch
 }

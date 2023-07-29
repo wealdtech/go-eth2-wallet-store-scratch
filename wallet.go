@@ -46,6 +46,7 @@ func (s *Store) RetrieveWallet(walletName string) ([]byte, error) {
 			return data, nil
 		}
 	}
+
 	return nil, errors.New("wallet not found")
 }
 
@@ -60,6 +61,7 @@ func (s *Store) RetrieveWalletByID(walletID uuid.UUID) ([]byte, error) {
 			return data, nil
 		}
 	}
+
 	return nil, errors.New("wallet not found")
 }
 
@@ -74,5 +76,6 @@ func (s *Store) RetrieveWallets() <-chan []byte {
 		close(ch)
 		s.walletMu.RUnlock()
 	}()
+
 	return ch
 }
